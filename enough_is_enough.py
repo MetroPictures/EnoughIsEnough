@@ -64,7 +64,8 @@ PROMPTS = {
 	'hear_doesnt_listen' : "hear_doesnt_listen.wav",
 	'choose_about_becky' : "choose_about_becky.wav",
 	'choose_about_imaginary_friend' : "choose_about_imaginary_friend.wav",
-	'choose_about_acquaintance_loop' : "choose_about_acquaintance_loop.wav"
+	'choose_about_acquaintance_loop' : "choose_about_acquaintance_loop.wav",
+	'choose_leave_complaint' : "choose_leave_complaint.wav"
 }
 
 KEY_MAP = {
@@ -90,7 +91,8 @@ KEY_MAP = {
 	'choose_about_family' : xrange(3,7) + [STAR_KEY],
 	'choose_exorcisms' : [3,4],
 	'choose_about_acquaintance_loop' : [11, STAR_KEY]
-	'choose_about_stranger_loop' : [11, STAR_KEY]
+	'choose_about_stranger_loop' : [11, STAR_KEY],
+	'choose_leave_complaint' : [POUND_KEY]
 }
 
 class EnoughIsEnough(MPServerAPI):
