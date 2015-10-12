@@ -10,64 +10,6 @@ POUND_KEY = 14
 
 AWKWARD_PAUSE = 5
 
-PROMPTS = {
-	'hear_hotline_start' : "hotline_start.wav",
-	'hear_main_menu_start' : "main_menu_start.wav",
-	'choose_from_main_menu' : "choose_from_main_menu.wav",
-	'choose_things_in_general' : "choose_things_in_general.wav",
-	'hear_hold_music' : "hold_music.wav",
-	'hear_we_are_sorry' : "we_are_sorry.wav",
-	'hear_cause_pain' : "bodies_cause_pain.wav",
-	'hear_body_is_sphinx' : "recombination_is_naturally_occurring.wav",
-	'choose_body_is_sphinx' : "we_have_yet_to_arrive_at_singularity.wav",
-	'choose_society_culture_politics' : "choose_society_culture_politics.wav",
-	'hear_people_are_morons' : "hear_people_are_morons.wav",
-	'hear_people_are_evil' : "hear_people_are_evil.wav",
-	'choose_birth_certificate' : "choose_birth_certificate.wav",
-	'hear_born_under_bad_sign' : "hear_born_under_bad_sign.wav",
-	'hear_cant_remember_birthday' : "hear_cant_remember_birthday.wav",
-	'choose_born_full_moon' : "choose_born_full_moon.wav",
-	'choose_astro_aspect' : "choose_astro_aspect.wav",
-	'choose_physics' : "choose_physics.wav",
-	'hear_retroactive_precognition' : "hear_retroactive_precognition.wav",
-	'hear_quantum_suicide' : "hear_quantum_suicide.wav",
-	'choose_drivers_license' : "choose_drivers_license.wav",
-	'hear_under_the_influence' : "hear_under_the_influence.wav",
-	'hear_discrimination' : "hear_discrimination.wav",
-	'hear_road_rage' : "hear_road_rage.wav",
-	'hear_about_toilet' : ["hear_about_toilet_1.wav", "hear_about_toilet_2.wav"],
-	'choose_toilet' : "choose_toilet.wav",
-	'hear_favorite_tv_show' : "hear_favorite_tv_show.wav",
-	'hear_legalize_crime' : "hear_legalize_crime.wav",
-	'hear_overthrow' : "hear_overthrow.wav",
-	'hear_about_yourself' : "hear_about_yourself.wav",
-	'choose_about_yourself' : "choose_about_yourself.wav",
-	'hear_ultima_thule_no_credit' : "hear_ultima_thule_no_credit.wav",
-	'choose_about_computers' : "choose_about_computers.wav",
-	'hear_about_hotline_operators' : "hear_about_hotline_operators.wav",
-	'choose_about_others' : "choose_about_others.wav",
-	'gather_animal_passcode' : "gather_animal_passcode.wav",
-	'hear_animal_passcode' : "hear_animal_passcode.wav",
-	'hear_mermaids' : "hear_mermaids.wav",
-	'hear_wait_for_authorities' : "hear_wait_for_authorities.wav",
-	'hear_animal_resembles_fly' : "hear_animal_resembles_fly.wav",
-	'hear_animal_eaten' : "hear_animal_eaten.wav",
-	'hear_stray_dog' : "hear_stray_dog.wav",
-	'choose_stray_dog' : "choose_stray_dog.wav",
-	'hear_nightlife' : "hear_nightlife.wav",
-	'hear_faithfulness' : "hear_faithfulness.wav",
-	'choose_fabulous_animal' : "choose_fabulous_animal.wav",
-	'choose_gorgon' : "choose_gorgon.wav",
-	'choose_turn_to_stone' : "choose_turn_to_stone.wav",
-	'hear_about_family' : "hear_about_family.wav",
-	'choose_about_mate' : "choose_about_mate.wav",
-	'hear_doesnt_listen' : "hear_doesnt_listen.wav",
-	'choose_about_becky' : "choose_about_becky.wav",
-	'choose_about_imaginary_friend' : "choose_about_imaginary_friend.wav",
-	'choose_about_acquaintance_loop' : "choose_about_acquaintance_loop.wav",
-	'choose_leave_complaint' : "choose_leave_complaint.wav"
-}
-
 KEY_MAP = {
 	'choose_from_main_menu' : xrange(3,7) +  [STAR_KEY],
 	'choose_things_in_general' : xrange(3,7) +  [STAR_KEY],
@@ -90,7 +32,7 @@ KEY_MAP = {
 	'choose_about_friend_loop' : [11, STAR_KEY],
 	'choose_about_family' : xrange(3,7) + [STAR_KEY],
 	'choose_exorcisms' : [3,4],
-	'choose_about_acquaintance_loop' : [11, STAR_KEY]
+	'choose_about_acquaintance_loop' : [11, STAR_KEY],
 	'choose_about_stranger_loop' : [11, STAR_KEY],
 	'choose_leave_complaint' : [POUND_KEY]
 }
@@ -100,6 +42,8 @@ class EnoughIsEnough(MPServerAPI):
 		MPServerAPI.__init__(self)
 
 		self.gpio_mappings = DEFAULT_TELEPHONE_GPIO
+		self.key_mappings = KEY_MAP
+
 		logging.basicConfig(filename=self.conf['d_files']['module']['log'], level=logging.DEBUG)
 
 	def hear_hotline_start(self):
@@ -112,7 +56,7 @@ class EnoughIsEnough(MPServerAPI):
 		etc...
 		"""
 
-		if self.say(os.path.join("prompts", PROMPTS[c])):
+		if self.say(os.path.join("prompts", "%s.wav" % c)):
 			return self.hear_main_menu_start()
 
 		return False
@@ -125,7 +69,7 @@ class EnoughIsEnough(MPServerAPI):
 		Hello, and thank you for calling. Please be aware that your call may be
 		monitored for quality assurance.
 		"""
-		if self.say(os.path.join("prompts", PROMPTS[c])):
+		if self.say(os.path.join("prompts", "%s.wav" % c)):
 			return self.choose_from_main_menu()
 
 		return False
@@ -143,7 +87,7 @@ class EnoughIsEnough(MPServerAPI):
 		For complaints about another person, press 5. 
 		To hear these options again, press the Star key.
 		"""
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 
 		if choice == KEY_MAP[c][0]:
 			return self.choose_things_in_general()
@@ -171,7 +115,7 @@ class EnoughIsEnough(MPServerAPI):
 		Press 2 to redirect your call to Complaint about yourself.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.choose_about_others()
 		elif choice == KEY_MAP[c][1]:
@@ -198,7 +142,7 @@ class EnoughIsEnough(MPServerAPI):
 		Press 4 for now.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice in KEY_MAP[c]:
 			return self.go_to_terminus('hear_ultima_thule_no_credit')
 
@@ -218,7 +162,7 @@ class EnoughIsEnough(MPServerAPI):
 		To hear these options again, press Star.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.choose_about_animals()
 		elif choice == KEY_MAP[c][1]:
@@ -247,7 +191,7 @@ class EnoughIsEnough(MPServerAPI):
 		Press 4 for a paranormal step-mother or 5 for another parent. 
 		To hear these options again, press Star.
 		"""
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			if self.redirect_to('hear_about_bodies'):
 				return self.choose_about_bodies()
@@ -275,7 +219,7 @@ class EnoughIsEnough(MPServerAPI):
 		If any of these entry points do apply to you, press 2.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.go_to_terminus('hear_none_apply_exorcism')
 		elif choice == KEY_MAP[c][1]:
@@ -294,7 +238,7 @@ class EnoughIsEnough(MPServerAPI):
 		Press 4 for complaints about Sally. 
 		If you would like to place a complaint about someone I don’t know, press 5.
 		"""
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			if self.redirect_to('hear_redirect_to_health_department'):
 				return self.go_to_terminus('hear_health_department')
@@ -321,7 +265,7 @@ class EnoughIsEnough(MPServerAPI):
 		if not self.say(os.path.join("prompts", PROMPTS[with_prompt])):
 			return False
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.choose_about_acquaintance()
 		elif choice == KEY_MAP[c][1]:
@@ -346,7 +290,7 @@ class EnoughIsEnough(MPServerAPI):
 		Press Star to hear these options again.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][-1]:
 			return self.choose_about_stranger()
 
@@ -380,7 +324,7 @@ class EnoughIsEnough(MPServerAPI):
 		if not self.say(os.path.join("prompts", PROMPTS[with_prompt])):
 			return False
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.choose_about_stranger_loop()
 		elif choice == KEY_MAP[c][1]:
@@ -399,7 +343,7 @@ class EnoughIsEnough(MPServerAPI):
 		Press 4 if he or she uses mind control.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			if self.say(os.path.join("prompts", "silence.wav")):
 				sleep(AWKWARD_PAUSE)
@@ -426,7 +370,7 @@ class EnoughIsEnough(MPServerAPI):
 		Press 4 if your call is about an imaginary friend or fictional character.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.go_to_terminus('hear_wait_for_authorities')
 		elif choice == KEY_MAP[c][1]:
@@ -457,7 +401,7 @@ class EnoughIsEnough(MPServerAPI):
 		if not self.say(os.path.join("prompts", PROMPTS[with_prompt])):
 			return False
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.choose_about_friend()
 		elif choice == KEY_MAP[c][1]:
@@ -484,7 +428,7 @@ class EnoughIsEnough(MPServerAPI):
 		If you would like to hear these options again, press Star.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			_ = self.gather(os.path.join("prompts", PROMPTS['gather_animal_passcode']))
 			return self.go_to_terminus('hear_animal_passcode')
@@ -522,7 +466,7 @@ class EnoughIsEnough(MPServerAPI):
 		Press 5 for gorgons.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			# missing from script?
 			return self.go_to_terminus('we_are_sorry')
@@ -546,7 +490,7 @@ class EnoughIsEnough(MPServerAPI):
 		If you have turned the gorgon to stone, press 2.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.go_to_terminus('hear_turned_to_stone')
 		elif choice == KEY_MAP[c][1]:
@@ -563,7 +507,7 @@ class EnoughIsEnough(MPServerAPI):
 		If you would like to let it be, press 2.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.go_to_terminus('hear_insult_to_injury')
 		elif choice == KEY_MAP[c][1]:
@@ -587,7 +531,7 @@ class EnoughIsEnough(MPServerAPI):
 		if not self.say(os.path.join("prompts", PROMPTS['hear_stray_dog'])) and self.hear_hold_music():
 			return False
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.hear_hold_music() and self.go_to_terminus('hear_nightlife')
 		elif choice == KEY_MAP[c][1]:
@@ -611,7 +555,7 @@ class EnoughIsEnough(MPServerAPI):
 		For complaints related to physics, press 5. 
 		Press Star to hear these options again.
 		"""
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 
 		if choice == KEY_MAP[c][0]:
 			return self.choose_about_bodies()
@@ -641,7 +585,7 @@ class EnoughIsEnough(MPServerAPI):
 		Press 6 if it is because every body is a sphinx. 
 		To hear these options again, press Star.
 		"""
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 
 		if choice == KEY_MAP[c][0] || choice == KEY_MAP[c][1]:
 			return self.go_to_terminus(PROMPTS['hear_we_are_sorry'])
@@ -663,7 +607,7 @@ class EnoughIsEnough(MPServerAPI):
 		"""
 		Please hold while we transfer your call to: Physics.
 		"""
-		if self.say(os.path.join("prompts", PROMPTS[c])) and self.hear_hold_music():
+		if self.say(os.path.join("prompts", "%s.wav" % c)) and self.hear_hold_music():
 			return self.choose_physics()
 
 		return False
@@ -675,7 +619,7 @@ class EnoughIsEnough(MPServerAPI):
 		"""
 		Please hold while we transfer your call to: Complaints.
 		"""
-		if self.say(os.path.join("prompts", PROMPTS[c])) and self.hear_hold_music():
+		if self.say(os.path.join("prompts", "%s.wav" % c)) and self.hear_hold_music():
 			return self.choose_from_main_menu()
 
 		return False
@@ -688,7 +632,7 @@ class EnoughIsEnough(MPServerAPI):
 		Recombination is naturally occurring. It is a fact of biological life. 
 		Please hold the line for the singularity.
 		"""
-		if self.say(os.path.join("prompts", PROMPTS[c])) and self.hear_hold_music():
+		if self.say(os.path.join("prompts", "%s.wav" % c)) and self.hear_hold_music():
 			return self.choose_body_is_sphinx()
 
 		return False
@@ -702,7 +646,7 @@ class EnoughIsEnough(MPServerAPI):
 		please continue to hold the line or 
 		else press the Pound key to return to the main menu.
 		"""
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.choose_from_main_menu()
 
@@ -724,7 +668,7 @@ class EnoughIsEnough(MPServerAPI):
 		To hear these options again, press Star.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.hear_creux_de_la_vague()
 		elif choice == KEY_MAP[c][1]:
@@ -747,7 +691,7 @@ class EnoughIsEnough(MPServerAPI):
 		"""
 		Merci de patienter, nous dirigeons votre appel à: l'environment
 		"""
-		if self.say(os.path.join("prompts", PROMPTS[c])) and self.hear_hold_music():
+		if self.say(os.path.join("prompts", "%s.wav" % c)) and self.hear_hold_music():
 			return self.hear_about_environment()
 
 		return False
@@ -760,7 +704,7 @@ class EnoughIsEnough(MPServerAPI):
 		Please hold while we transfer your call to: Complaints about animals.
 		"""
 
-		if self.say(os.path.join("prompts", PROMPTS[c])) and self.hear_hold_music():
+		if self.say(os.path.join("prompts", "%s.wav" % c)) and self.hear_hold_music():
 			return self.hear_about_animals()
 
 		return False
@@ -775,7 +719,7 @@ class EnoughIsEnough(MPServerAPI):
 		If you can’t remember your birthday, press 3.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.go_to_terminus(PROMPTS['hear_born_under_bad_sign'])
 		elif choice == KEY_MAP[c][1]:
@@ -796,7 +740,7 @@ class EnoughIsEnough(MPServerAPI):
 		Fire signs, press 4.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice in KEY_MAP[c]:
 			return self.choose_astro_aspect()
 
@@ -816,7 +760,7 @@ class EnoughIsEnough(MPServerAPI):
 		7 for parallel.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice in KEY_MAP[c]:
 			return self.go_to_terminus(PROMPTS['hear_astro_aspect'])
 
@@ -826,7 +770,7 @@ class EnoughIsEnough(MPServerAPI):
 		c = 'hear_about_environment'
 		logging.info(c)
 
-		if self.say(os.path.join("prompts", PROMPTS[c])) and self.hear_hold_music():
+		if self.say(os.path.join("prompts", "%s.wav" % c)) and self.hear_hold_music():
 			return self.hear_about_toilet()
 
 		return False
@@ -841,7 +785,7 @@ class EnoughIsEnough(MPServerAPI):
 		Please hold while we connect you to our strikebreaking thugs. (wait music)
 		"""
 
-		for p in PROMPTS[c]:
+		for p in "%s.wav" % c:
 			if not self.say(os.path.join("prompts", p)) and self.hear_hold_music():
 				return False
 
@@ -860,7 +804,7 @@ class EnoughIsEnough(MPServerAPI):
 		press 3.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.go_to_terminus('hear_favorite_tv_show')
 		elif choice == KEY_MAP[c][1]:
@@ -881,7 +825,7 @@ class EnoughIsEnough(MPServerAPI):
 		If you are calling about a clogged toilet or drain, press 4.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			return self.hear_retroactive_precognition()
 		elif choice == KEY_MAP[c][1]:
@@ -921,7 +865,7 @@ class EnoughIsEnough(MPServerAPI):
 		For road rage, press 3.
 		"""
 
-		choice = self.prompt(os.path.join("prompts", PROMPTS[c]), KEY_MAP[c])
+		choice = self.prompt(os.path.join("prompts", "%s.wav" % c), KEY_MAP[c])
 		if choice == KEY_MAP[c][0]:
 			if self.hear_hold_music():
 				return self.go_to_terminus(PROMPTS['hear_under_the_influence'])
@@ -938,7 +882,7 @@ class EnoughIsEnough(MPServerAPI):
 		c = 'hear_hold_music':
 		logging.info(c)
 
-		return self.say(os.path.join("prompts", PROMPTS[c]))
+		return self.say(os.path.join("prompts", "%s.wav" % c))
 
 	def go_to_terminus(self, with_prompt):
 		# terminus
