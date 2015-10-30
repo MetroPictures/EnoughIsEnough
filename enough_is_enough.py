@@ -4,6 +4,7 @@ from time import sleep
 
 from core.api import MPServerAPI
 
+# arbitrary at this point...
 ONE = 3
 MUTE = 13
 DOLLAR = 14
@@ -11,10 +12,15 @@ POUND = 10
 EURO = 11
 FOUR = 6
 TEN = 12
+COMMAND = 9
+CONTROL = 8
+INFINITY = 7
+COMMA = 6
 
 TYPE_A = [ONE, MUTE, DOLLAR, POUND, FOUR, TEN]
 TYPE_B = [ONE, MUTE, DOLLAR, POUND, FOUR, EURO, TEN]
 TYPE_C = [ONE, MUTE, DOLLAR, POUND]
+TYPE_D = [INFINITY, TEN]
 
 KEY_MAP = {
 	'2_MainMenu': {
@@ -32,10 +38,10 @@ KEY_MAP = {
 		'tree' : [
 			'4_BodiesMenu',
 			'9_SocietyCulturePoliticsMenu',
-			 {'20_EnvironmentEnd' : '28_A_CloggedToiletorDrainMenu'},
-			 '10_CreuxdeLaVagueEnd', #what
-			 '21_PhysicsMenu',
-			 '3_ThingsInGeneralMenu'
+			'20_EnvironmentEnd',
+			'10_CreuxdeLaVagueEnd', #what
+			'21_PhysicsMenu',
+			'3_ThingsInGeneralMenu'
 		],
 		'map' : TYPE_A
 	},
@@ -44,77 +50,79 @@ KEY_MAP = {
 			'5_WeAreSorryEnd',
 			'5_WeAreSorryEnd',
 			'5_WeAreSorryEnd',
-			'6_CausePainEnd',
+			{'6_CausePainEnd' : '21_PhysicsMenu'},
 			{'7_UselessEnd' : '2_MainMenu'},
 			'8_SphinxEnd',
 			'4_BodiesMenu'
 		],
 		'map' : TYPE_B
 	},
-	'5_WeAreSorryEnd': {
-		'tree' : [],
-		'map' : []
-	},
-	'6_CausePainEnd': {
-		'tree' : [],
-		'map' : []
-	},
-	'7_UselessEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'5_WeAreSorryEnd': None,
+	'6_CausePainEnd' : '21_PhysicsMenu',
+	'7_UselessEnd': '2_MainMenu',
 	'8_SphinxEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['8_SphinxEnd', '2_MainMenu'],
+		'map' : [None, COMMAND]
 	},
 	'9_SocietyCulturePoliticsMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'10_CreuxdeLaVagueEnd',
+			'11_PeopleAreAnimalsEnd',
+			'12_BirthCertificateMenu',
+			'18_PeopleAreMoronsEnd',
+			'19_PeopleAreEvilEnd',
+			'9_SocietyCulturePoliticsMenu'
+		],
+		'map' : TYPE_A
 	},
-	'10_CreuxdeLaVagueEnd':{
-		'tree' : [],
-		'map' : []
-	},
-	'11_PeopleAreAnimalsEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'10_CreuxdeLaVagueEnd': '20_EnvironmentEnd',
+	'11_PeopleAreAnimalsEnd': '38_AnimalComplaintMenu',
 	'12_BirthCertificateMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'13_BornUnderBadSignEnd',
+			'14_BornFullMoonMenu',
+			'17_CantRememberEnd'
+		],
+		'map' : [ONE, MUTE, DOLLAR]
 	},
-	'13_BornUnderBadSignEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'13_BornUnderBadSignEnd': None,
 	'14_BornFullMoonMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'15_AstrologicalAspectMenu',
+			'15_AstrologicalAspectMenu',
+			'15_AstrologicalAspectMenu',
+			'15_AstrologicalAspectMenu'
+		],
+		'map' : [ONE, MUTE, DOLLAR, POUND]
 	},
 	'15_AstrologicalAspectMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'16_AstrologicalAspectEnd',
+			'16_AstrologicalAspectEnd',
+			'16_AstrologicalAspectEnd',
+			'16_AstrologicalAspectEnd',
+			'16_AstrologicalAspectEnd',
+			'16_AstrologicalAspectEnd'
+		],
+		'map' : [ONE, MUTE, DOLLAR, POUND, EURO, CONTROL]
 	},
-	'16_AstrologicalAspectEnd':{
-		'tree' : [],
-		'map' : []
+	'16_AstrologicalAspectEnd': {
+		'tree' : ['15_AstrologicalAspectMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
-	'17_CantRememberEnd':{
-		'tree' : [],
-		'map' : []
+	'17_CantRememberEnd': {
+		'tree' : ['12_BirthCertificateMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'18_PeopleAreMoronsEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['9_SocietyCulturePoliticsMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'19_PeopleAreEvilEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['9_SocietyCulturePoliticsMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
-	'20_EnvironmentEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'20_EnvironmentEnd': '28_A_CloggedToiletorDrainMenu',
 	'21_PhysicsMenu':{
 		'tree' : [],
 		'map' : []
@@ -163,33 +171,47 @@ KEY_MAP = {
 		'tree' : [],
 		'map' : []
 	},
-	'32_ComplaintAboutYourselfEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'32_ComplaintAboutYourselfEnd': '33_UltimaThuleMainMenuOptionOne',
 	'33_UltimaThuleMainMenuOptionOne':{
-		'tree' : ['34_UtlitmaThuleEnd', '34_UtlitmaThuleEnd', '34_UtlitmaThuleEnd', '34_UtlitmaThuleEnd'],
+		'tree' : [
+			'34_UtlitmaThuleEnd', 
+			'34_UtlitmaThuleEnd', 
+			'34_UtlitmaThuleEnd', 
+			'34_UtlitmaThuleEnd'
+		],
 		'map' : TYPE_C
 	},
-	'34_UtlitmaThuleEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'34_UtlitmaThuleEnd': None,
 	'35_ComlaintAboutComputerMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['37_ComplaintAboutAnotherPersonMenu', '32_ComplaintAboutYourselfEnd'],
+		'map' : [ONE, MUTE]
 	},
-	'36_ComplaintAboutHotlineOperatorsEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'36_ComplaintAboutHotlineOperatorsEnd': None,
 	'37_ComplaintAboutAnotherPersonMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'38_AnimalComplaintMenu',
+			'58_MateMenu',
+			'63_FriendComplaintsMenu',
+			'68_FamilyMemberMenu',
+			'76_AcquaintanceMenu',
+			'83_StrangerMenuOption1',
+			'37_ComplaintAboutAnotherPersonMenu'
+		],
+		'map' : TYPE_B
 	},
 	'38_AnimalComplaintMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'39_AnimalBrokenVaseMenu',
+			'41_StrayDogMenu',
+			'46_MermaidsEnd',
+			'47_AnimalBelongingToEmperorEnd', #what
+			'47_AnimalBelongingToEmperorEnd',
+			'48_FabulousAnimalMenu',
+			'56_AnimalResemblesFlyEnd',
+			'57_AnimalYouHaveEatenEnd',
+			'38_AnimalComplaintMenu'
+		], 
+		'map' : [ONE, MUTE, DOLLAR, POUND, FOUR, EURO, CONTROL, COMMA, TEN]
 	},
 	'39_AnimalBrokenVaseMenu':{
 		'tree' : [],
@@ -415,9 +437,15 @@ class EnoughIsEnough(MPServerAPI):
 		if route is None:
 			route = '2_MainMenu'
 
+		# go to terminus
 		if KEY_MAP[route] is None:
 			return self.say(os.path.join("prompts", "%s.wav" % route), interruptable=False) \
 				and self.on_hang_up()
+
+		# bounce to next route
+		if type(KEY_MAP[route]) in [str, unicode]:
+			return self.say(os.path.join("prompts", "%s.wav" % route), interruptable=False) \
+				and self.route_next(route=KEY_MAP[route])
 
 		choice = self.prompt(os.path.join("prompts", "%s.wav" % route), release_keys=KEY_MAP[route]['map'])
 		next_route = KEY_MAP[route]['tree'][KEY_MAP[route]['map'].index(choice)]
