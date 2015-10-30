@@ -6,6 +6,8 @@ from core.api import MPServerAPI
 
 # arbitrary at this point...
 ONE = 3
+TWO = 15
+THREE = 16
 MUTE = 13
 DOLLAR = 14
 POUND = 10
@@ -15,7 +17,10 @@ TEN = 12
 COMMAND = 9
 CONTROL = 8
 INFINITY = 7
-COMMA = 6
+COMMA = 5
+PAUSE = 4
+
+LOOP_SIGNAL = -1
 
 TYPE_A = [ONE, MUTE, DOLLAR, POUND, FOUR, TEN]
 TYPE_B = [ONE, MUTE, DOLLAR, POUND, FOUR, EURO, TEN]
@@ -26,7 +31,7 @@ KEY_MAP = {
 	'2_MainMenu': {
 		'tree' : [
 			'3_ThingsInGeneralMenu', 
-			{'32_ComplaintAboutYourselfEnd' : '33_UltimaThuleMainMenuOptionOne'},
+			'32_ComplaintAboutYourselfEnd',
 			'35_ComlaintAboutComputerMenu',
 			'36_ComplaintAboutHotlineOperatorsEnd',
 			'37_ComplaintAboutAnotherPersonMenu',
@@ -50,14 +55,17 @@ KEY_MAP = {
 			'5_WeAreSorryEnd',
 			'5_WeAreSorryEnd',
 			'5_WeAreSorryEnd',
-			{'6_CausePainEnd' : '21_PhysicsMenu'},
-			{'7_UselessEnd' : '2_MainMenu'},
+			'6_CausePainEnd',
+			'7_UselessEnd',
 			'8_SphinxEnd',
 			'4_BodiesMenu'
 		],
 		'map' : TYPE_B
 	},
-	'5_WeAreSorryEnd': None,
+	'5_WeAreSorryEnd': {
+		'tree' : ['4_BodiesMenu', '2_MainMenu'],
+		'map' : TYPE_D
+	},
 	'6_CausePainEnd' : '21_PhysicsMenu',
 	'7_UselessEnd': '2_MainMenu',
 	'8_SphinxEnd':{
@@ -93,7 +101,7 @@ KEY_MAP = {
 			'15_AstrologicalAspectMenu',
 			'15_AstrologicalAspectMenu'
 		],
-		'map' : [ONE, MUTE, DOLLAR, POUND]
+		'map' : TYPE_C
 	},
 	'15_AstrologicalAspectMenu':{
 		'tree' : [
@@ -124,52 +132,46 @@ KEY_MAP = {
 	},
 	'20_EnvironmentEnd': '28_A_CloggedToiletorDrainMenu',
 	'21_PhysicsMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'22_A_RetroactivePrecognitionEnd',
+			'23_DrivingLicenseMenu',
+			'27_QuantumSuicideEnd',
+			'28_A_CloggedToiletorDrainMenu'
+		],
+		'map' : TYPE_C
 	},
-	'22_A_RetroactivePrecognitionEnd':{
-		'tree' : [],
-		'map' : []
-	},
-	'22_RetroactivePrecognitionEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'22_A_RetroactivePrecognitionEnd':'22_RetroactivePrecognitionEnd',
+	'22_RetroactivePrecognitionEnd': '28_A_CloggedToiletorDrainMenu',
 	'23_DrivingLicenseMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'24_UnderTheInfluenceEnd', 
+			'25_DiscriminationEnd', 
+			'26_RoadRageEnd'
+		],
+		'map' : [ONE, MUTE, DOLLAR]
 	},
 	'24_UnderTheInfluenceEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['21_PhysicsMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
-	'25_DiscriminationEnd':{
-		'tree' : [],
-		'map' : []
-	},
-	'26_RoadRageEnd':{
-		'tree' : [],
-		'map' : []
-	},
-	'27_QuantumSuicideEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'25_DiscriminationEnd':'37_ComplaintAboutAnotherPersonMenu',
+	'26_RoadRageEnd':'2_MainMenu',
+	'27_QuantumSuicideEnd':'21_PhysicsMenu',
 	'28_A_CloggedToiletorDrainMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['29_FavoriteTVEnd', '30_LegalizeCrimeEnd', '31_OverthrowEnd'],
+		'map' : [ONE, MUTE, DOLLAR]
 	},
 	'29_FavoriteTVEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['28_A_CloggedToiletorDrainMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'30_LegalizeCrimeEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['28_A_CloggedToiletorDrainMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'31_OverthrowEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['28_A_CloggedToiletorDrainMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'32_ComplaintAboutYourselfEnd': '33_UltimaThuleMainMenuOptionOne',
 	'33_UltimaThuleMainMenuOptionOne':{
@@ -179,7 +181,7 @@ KEY_MAP = {
 			'34_UtlitmaThuleEnd', 
 			'34_UtlitmaThuleEnd'
 		],
-		'map' : TYPE_C
+		'map' : [ONE, TWO, THREE, FOUR]
 	},
 	'34_UtlitmaThuleEnd': None,
 	'35_ComlaintAboutComputerMenu':{
@@ -214,210 +216,186 @@ KEY_MAP = {
 		'map' : [ONE, MUTE, DOLLAR, POUND, FOUR, EURO, CONTROL, COMMA, TEN]
 	},
 	'39_AnimalBrokenVaseMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['40_AnimalBrokenVaseEnd'],
+		'map' : [COMMAND]
 	},
-	'40_AnimalBrokenVaseEnd':[],
+	'40_AnimalBrokenVaseEnd':None,
 	'41_StrayDogMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'42_NightlifeEnd', 
+			'43_FaithfulnessEnd', 
+			'44_ProtectionEnd', 
+			'45_EuthanasiaAndMourningEnd'
+		],
+		'map' : [ONE, MUTE, DOLLAR, POUND]
 	},
 	'42_NightlifeEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['38_AnimalComplaintMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
-	'43_FaithfulnessEnd':{
-		'tree' : [],
-		'map' : []
+	'43_FaithfulnessEnd':'63_FriendComplaintsMenu',
+	'44_ProtectionEnd':'33_UltimaThuleMainMenuOptionOne',
+	'45_EuthanasiaAndMourningEnd':'33_UltimaThuleMainMenuOptionOne',
+	'46_MermaidsEnd':{
+		'tree' : ['38_AnimalComplaintMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
-	'44_ProtectionEnd':{
-		'tree' : [],
-		'map' : []
-	},
-	'45_EuthanasiaAndMourningEnd':{
-		'tree' : [],
-		'map' : []
-	},
-	'46_MermaidsEnd':[],
-	'47_AnimalBelongingToEmperorEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'47_AnimalBelongingToEmperorEnd':'55_musiconly',
 	'48_FabulousAnimalMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'37_ComplaintAboutAnotherPersonMenu', #what
+			'49_DodoBirdEnd', 
+			'50_MangroveAndCoelacanthEnd',
+			'50_MangroveAndCoelacanthEnd',
+			'51_GorgonMenu'
+		], 
+		'map' : [ONE, MUTE, DOLLAR, POUND, FOUR]
 	},
-	'49_DodoBirdEnd':{
-		'tree' : [],
-		'map' : []
-	},
-	'50_MangroveAndCoelacanthEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'49_DodoBirdEnd':'3_ThingsInGeneralMenu',
+	'50_MangroveAndCoelacanthEnd':'68_FamilyMemberMenu',
 	'51_GorgonMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['52_YouHaveBeenTurnedToStoneEnd', '53_TurnedGorgonToStoneMenu'],
+		'map' : [ONE, MUTE]
 	},
-	'52_YouHaveBeenTurnedToStoneEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'52_YouHaveBeenTurnedToStoneEnd':None,
 	'53_TurnedGorgonToStoneMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['54_AddInsultToInjuryEnd', '55_musiconly'],
+		'map' : [ONE, MUTE]
 	},
 	'54_AddInsultToInjuryEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['38_AnimalComplaintMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
-	'55_musiconly':{
-		'tree' : [],
-		'map' : []
-	},
-	'56_AnimalResemblesFlyEnd':{
-		'tree' : [],
-		'map' : []
-	},
-	'57_AnimalYouHaveEatenEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'55_musiconly':LOOP_SIGNAL,
+	'56_AnimalResemblesFlyEnd':'21_PhysicsMenu',
+	'57_AnimalYouHaveEatenEnd':'32_ComplaintAboutYourselfEnd',
 	'58_MateMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'59_AccidentallyCalledYouMomEnd', 
+			'60_DoesntListenEnd',
+			'61_IllegalAlienEnd',
+			'62_UsesMindControlEnd'
+		],
+		'map' : TYPE_C
 	},
-	'59_AccidentallyCalledYouMomEnd':{
-		'tree' : [],
-		'map' : []
-	},
-	'60_DoesntListenEnd':{
-		'tree' : [],
-		'map' : []
-	},
-	'61_IllegalAlienEnd':{
-		'tree' : [],
-		'map' : []
-	},
-	'62_UsesMindControlEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'59_AccidentallyCalledYouMomEnd':'2_MainMenu',
+	'60_DoesntListenEnd':'58_MateMenu',
+	'61_IllegalAlienEnd':'55_musiconly',
+	'62_UsesMindControlEnd':'33_UltimaThuleMainMenuOptionOne',
 	'63_FriendComplaintsMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'64_CocaineEnd',
+			'65_BeckyEnd',
+			'66_DogEnd',
+			'67_ImaginaryFriendEnd'
+		],
+		'map' : TYPE_C
 	},
-	'64_CocaineEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'64_CocaineEnd':'55_musiconly',
 	'65_BeckyEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['63_FriendComplaintsMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
-	'66_DogEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'66_DogEnd':'38_AnimalComplaintMenu',
 	'67_ImaginaryFriendEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['63_FriendComplaintsMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'68_FamilyMemberMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'69_BabyEnd',
+			'70_AristocracyEnd',
+			'71_SiblingEnd',
+			'72_ParanormalStepMotherMenuA',
+			'75_ParentEnd',
+			'68_FamilyMemberMenu'
+		],
+		'map' : [ONE, MUTE, DOLLAR, POUND, FOUR, TEN]
 	},
-	'69_BabyEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'69_BabyEnd':'4_BodiesMenu',
 	'70_AristocracyEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['68_FamilyMemberMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
-	'71_SiblingEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'71_SiblingEnd':'38_AnimalComplaintMenu',
 	'72_ParanormalStepMotherMenuA':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['73_NoneApplyEnd', '74_AnyDoApplyEnd'],
+		'map' : [ONE, MUTE]
 	},
-	'73_NoneApplyEnd':{
-		'tree' : [],
-		'map' : []
-	},
-	'74_AnyDoApplyEnd':{
-		'tree' : [],
-		'map' : []
-	},
-	'75_ParentEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'73_NoneApplyEnd':None,
+	'74_AnyDoApplyEnd':None,
+	'75_ParentEnd':'76_AcquaintanceMenu',
 	'76_AcquaintanceMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'77_WaiterEnd',
+			'78_YourNeighborMenu',
+			'80_DaveEnd',
+			'81_SallyEnd',
+			'82_IDontKnowThemEnd'
+		],
+		'map' : [ONE, MUTE, DOLLAR, POUND, FOUR]
 	},
-	'77_WaiterEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'77_WaiterEnd':None,
 	'78_YourNeighborMenu':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['79_YourNeighborEnd'],
+		'map' : [COMMAND]
 	},
-	'79_YourNeighborEnd':{
-		'tree' : [],
-		'map' : []
-	},
+	'79_YourNeighborEnd':None,
 	'80_DaveEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['76_AcquaintanceMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'81_SallyEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['76_AcquaintanceMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'82_IDontKnowThemEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['76_AcquaintanceMenu', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'83_StrangerMenuOption1':{
-		'tree' : [],
-		'map' : []
+		'tree' : [
+			'85_PopularLookingEndAndSartoriallyImpairedEnd',
+			'86_HappyEnd',
+			'88_BovineEnd',
+			'89_HomelessEnd',
+			'91_DrunkAndCreepyEnd',
+			'85_PopularLookingEndAndSartoriallyImpairedEnd',
+			'83_StrangerMenuOption1'
+		],
+		'map' : [ONE, MUTE, DOLLAR, POUND, FOUR, EURO, CONTROL, COMMA, PAUSE, TEN]
 	},
 	'84_StrangerPromptOption1':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['83_StrangerMenuOption1'],
+		'map' : [COMMAND]
 	},
 	'85_PopularLookingEndAndSartoriallyImpairedEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['83_StrangerMenuOption1', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'86_HappyEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['83_StrangerMenuOption1', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'87_TallEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['83_StrangerMenuOption1', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'88_BovineEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['83_StrangerMenuOption1', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'89_HomelessEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['83_StrangerMenuOption1', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'90_LoudEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['83_StrangerMenuOption1', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 	'91_DrunkAndCreepyEnd':{
-		'tree' : [],
-		'map' : []
+		'tree' : ['83_StrangerMenuOption1', '2_MainMenu'],
+		'map' : TYPE_D
 	},
 }
 
@@ -439,24 +417,22 @@ class EnoughIsEnough(MPServerAPI):
 
 		# go to terminus
 		if KEY_MAP[route] is None:
-			return self.say(os.path.join("prompts", "%s.wav" % route), interruptable=False) \
-				and self.on_hang_up()
+			return self.say(os.path.join("prompts", "%s.wav" % route), interruptable=False)
 
 		# bounce to next route
 		if type(KEY_MAP[route]) in [str, unicode]:
 			return self.say(os.path.join("prompts", "%s.wav" % route), interruptable=False) \
 				and self.route_next(route=KEY_MAP[route])
 
+		if type(KEY_MAP[route]) is int:
+			if KEY_MAP[route] == LOOP_SIGNAL:
+				return self.say(os.path.join("prompts", "%s.wav" % route), interruptable=False) \
+					and self.route_next(route=route)
+
 		choice = self.prompt(os.path.join("prompts", "%s.wav" % route), release_keys=KEY_MAP[route]['map'])
 		next_route = KEY_MAP[route]['tree'][KEY_MAP[route]['map'].index(choice)]
 
-		if type(next_route) is dict:
-			return self.say(os.path.join("prompts", "%s.wav" % next_route.items()[0][0])) \
-				and self.route_next(route=next_route.items()[0][1])
-		else:
-			return self.route_next(route=next_route)
-
-		return False
+		return self.route_next(route=next_route)
 
 	def run_script(self):
 		super(EnoughIsEnough, self).run_script()
