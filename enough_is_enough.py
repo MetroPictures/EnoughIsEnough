@@ -422,9 +422,6 @@ class EnoughIsEnough(MPServerAPI):
 		choice = self.prompt(os.path.join("prompts", "%s.wav" % route), release_keys=KEY_MAP[route]['map'])
 		next_route = KEY_MAP[route]['tree'][KEY_MAP[route]['map'].index(choice)]
 
-		print "NEXT ROUTE TYPE: %s" % type(next_route)
-		print next_route.items()[0]
-
 		if type(next_route) is dict:
 			return self.say(os.path.join("prompts", "%s.wav" % next_route.items()[0][0])) \
 				and self.route_next(route=next_route.items()[0][1])
