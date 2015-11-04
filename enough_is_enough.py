@@ -5,20 +5,20 @@ from time import sleep
 from core.api import MPServerAPI
 
 # arbitrary at this point...
-ONE = 3
-TWO = 15
-THREE = 16
-MUTE = 13
-DOLLAR = 14
-POUND = 10
-EURO = 11
-FOUR = 6
-TEN = 12
-COMMAND = 9
-CONTROL = 8
-INFINITY = 7
-COMMA = 5
-PAUSE = 4
+ONE = 12
+TWO = 8
+THREE = 4
+FOUR = 9
+TEN = 15
+MUTE = 8
+DOLLAR = 4
+POUND = 13
+EURO = 5
+COMMAND = 7
+CONTROL = 14
+INFINITY = 11
+COMMA = 10
+PAUSE = 6
 
 LOOP_SIGNAL = -1
 
